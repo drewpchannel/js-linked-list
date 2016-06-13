@@ -5,6 +5,7 @@
  */
 
  //Need to set tracking, count, and null for removing \ inserting
+// count length needed?
 
 //var node = {};
 var countLength = 0;
@@ -70,12 +71,12 @@ function linkedListGenerator(){
 // add an if to check if null, make i break for (like i < 2 so i would = 10 at null)
 
   function _getByValue (value) {
-    var valueEntered;
-    if ( value === null ){
+    var valueEntered = value;
+    if ( value === null ) {
       valueEntered =  _promptGet ();
     }
     var nodeNextTracker = node;
-    for ( var i = 1; i < countLength; i++ ){
+    for ( var i = 1; i < countLength; i++ ) {
       if ( nodeNextTracker.value !== valueEntered ) {
         nodeNextTracker = nodeNextTracker.next;
       } else {
@@ -87,11 +88,11 @@ function linkedListGenerator(){
 
   function _remove (number) {
     var valueEntered = _promptGet();
-    var foundEntry = _getByValue(valueEntered);
     var valueBeforeObject = node;
     var valueAfterObject = node;
-    if ( typeof parseInt( valueEntered ) === "number") {
+    if ( typeof parseInt( valueEntered ) === "number" ) {
       valueEntered = parseInt( valueEntered );
+      //work on condesing this
       var hopsCounter = valueEntered;
       hopsCounter--;
       hopsCounter--;
@@ -110,7 +111,7 @@ function linkedListGenerator(){
         console.log ( 'removed ' + valueEntered );
         countLength--;
     }
-    if ( valueEntered === _getByValue(valueEntered) ) {
+    if ( isNaN(valueEntered) ) {
 
     } else {
       console.log( valueEntered + ' not found' );
@@ -118,7 +119,18 @@ function linkedListGenerator(){
   }
 
   function _insert (value, number) {
-
+    var valueEntered = prompt ( 'Enter the value you would like save' );
+    var valueToAppend = prompt ( 'Enter the value you would like to find and append' );
+    var objectToAppend = _getByValue ( valueToAppend );
+    var nextObjectInLine = objectToAppend;
+    // check if this node is at the end
+    nextObjectInLine = nextObjectInLine.next;
+    var newToInsert = {
+      value: valueEntered,
+      next: nextObjectInLine
+    };
+    //going to the wrong next value
+    objectToAppend.next = newToInsert;
   }
 
   function _promptGet () {
