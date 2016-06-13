@@ -4,28 +4,18 @@
  * @return {Object} an object exposing methods to be used to manipulate a linked list
  */
 
+ //Need to set tracking, count, and null for removing \ inserting
+
 //var node = {};
-var makeDynamic = 5;
-var node = {
-  value: 'donkey',
-  next: {
-    value: 'helicopter',
-    next: {
-      value: 'fireman',
-      next: {
-        value: 'telephone',
-        next: null
-      }
-    }
-  }
-};
+var countLength = 0;
+var node = {};
 // addtrack has to be set when the first node is generated, null when declaring
-var addTracking = node.next.next.next;
+var addTracking = null;
+var head = null;
+var tail = null;
 
 function linkedListGenerator(){
   //change to null when not using fake node
-var head = node.value;
-var tail = node.next.next.next;
 
 
   function _getHead () {
@@ -35,42 +25,57 @@ var tail = node.next.next.next;
 
   function _getTail () {
     var nodeNextTracker = node;
-    for ( var i = 1; i < makeDynamic; i++ ){
+    for ( var i = 1; i < countLength; i++ ){
       if ( nodeNextTracker.next === null ) {
-        alert( 'The tail is item ' + i + ', with a value of' + nodeNextTracker.value );
+        console.log( 'The tail is item ' + i + ', with a value of' + nodeNextTracker.value );
     return tail;
       } else {
         nodeNextTracker = nodeNextTracker.next;
       }
     }
+    nodeNextTracker = node;
   }
 
   function _add(value) {
     var valueToBeAdded =  _promptGet ();
     if ( head === null && tail === null ) {
       node = {
-        value: value,
+        value: valueToBeAdded,
         next: null
       };
+      addTracking = node;
       tail = node.value;
       head = node.value;
-    }
-    if ( node.tail !== null ) {
+      countLength++;
+    } else if ( node.next === null ) {
       addTracking.next = {
         value: valueToBeAdded,
         next: null
       };
       addTracking = addTracking.next;
-      makeDynamic++;
+      tail = addTracking;
+      countLength++;
+    } else {
+      addTracking.next = {
+        value: valueToBeAdded,
+        next: null
+      };
+      addTracking = addTracking.next;
+      tail = addTracking;
+      countLength++;
     }
+    console.log( 'Added: ' + valueToBeAdded);
   }
 
 // add an if to check if null, make i break for (like i < 2 so i would = 10 at null)
 
   function _getByValue (value) {
-    var valueEntered =  _promptGet ();
+    var valueEntered;
+    if ( value === null ){
+      valueEntered =  _promptGet ();
+    }
     var nodeNextTracker = node;
-    for ( var i = 1; i < makeDynamic; i++ ){
+    for ( var i = 1; i < countLength; i++ ){
       if ( nodeNextTracker.value !== valueEntered ) {
         nodeNextTracker = nodeNextTracker.next;
       } else {
@@ -81,7 +86,35 @@ var tail = node.next.next.next;
   }
 
   function _remove (number) {
+    var valueEntered = _promptGet();
+    var foundEntry = _getByValue(valueEntered);
+    var valueBeforeObject = node;
+    var valueAfterObject = node;
+    if ( typeof parseInt( valueEntered ) === "number") {
+      valueEntered = parseInt( valueEntered );
+      var hopsCounter = valueEntered;
+      hopsCounter--;
+      hopsCounter--;
+      if ( hopsCounter < 1 ) {
+        valueBeforeObject = node;
+      } else {
+        for ( hopsCounter; hopsCounter > 0; hopsCounter--) {
+          valueBeforeObject = valueBeforeObject.next;
+        }
+      }
+        hopsCounter = valueEntered;
+        for ( hopsCounter; hopsCounter > 0; hopsCounter-- ) {
+          valueAfterObject = valueAfterObject.next;
+        }
+        valueBeforeObject.next = valueAfterObject;
+        console.log ( 'removed ' + valueEntered );
+        countLength--;
+    }
+    if ( valueEntered === _getByValue(valueEntered) ) {
 
+    } else {
+      console.log( valueEntered + ' not found' );
+    }
   }
 
   function _insert (value, number) {
