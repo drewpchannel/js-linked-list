@@ -1,24 +1,10 @@
-/**
- * @name  linkedListGenerator
- * @description  Main Module
- * @return {Object} an object exposing methods to be used to manipulate a linked list
- */
-
- //Need to set tracking, count, and null for removing \ inserting
-// count length needed?
-
-//var node = {};
 var countLength = 0;
 var node = {};
-// addtrack has to be set when the first node is generated, null when declaring
 var addTracking = null;
 var head = null;
 var tail = null;
 
 function linkedListGenerator(){
-  //change to null when not using fake node
-
-
   function _getHead () {
     console.log ( node.value );
     return head;
@@ -35,6 +21,7 @@ function linkedListGenerator(){
       }
     }
     nodeNextTracker = node;
+    console.log(tail.value);
   }
 
   function _add(value) {
@@ -72,13 +59,16 @@ function linkedListGenerator(){
 
   function _getByValue (value) {
     var valueEntered = value;
-    if ( value === null ) {
+    if ( value === "" ) {
       valueEntered =  _promptGet ();
     }
     var nodeNextTracker = node;
     for ( var i = 1; i < countLength; i++ ) {
       if ( nodeNextTracker.value !== valueEntered ) {
         nodeNextTracker = nodeNextTracker.next;
+        if ( nodeNextTracker.next === null ) {
+          return nodeNextTracker;
+        }
       } else {
         console.log ( 'it is ' + nodeNextTracker.value + ' which is item ' + i + ' in the list ');
         return nodeNextTracker;
@@ -87,15 +77,12 @@ function linkedListGenerator(){
   }
 
   function _remove (number) {
-    var valueEntered = _promptGet();
+    var valueEntered = _promptGet ();
     var valueBeforeObject = node;
     var valueAfterObject = node;
     if ( typeof parseInt( valueEntered ) === "number" ) {
       valueEntered = parseInt( valueEntered );
-      //work on condesing this
-      var hopsCounter = valueEntered;
-      hopsCounter--;
-      hopsCounter--;
+      var hopsCounter = valueEntered - 2;
       if ( hopsCounter < 1 ) {
         valueBeforeObject = node;
       } else {
@@ -117,20 +104,22 @@ function linkedListGenerator(){
       console.log( valueEntered + ' not found' );
     }
   }
-
+//if next = null need to ignore next
   function _insert (value, number) {
     var valueEntered = prompt ( 'Enter the value you would like save' );
     var valueToAppend = prompt ( 'Enter the value you would like to find and append' );
     var objectToAppend = _getByValue ( valueToAppend );
     var nextObjectInLine = objectToAppend;
-    // check if this node is at the end
-    nextObjectInLine = nextObjectInLine.next;
     var newToInsert = {
       value: valueEntered,
       next: nextObjectInLine
     };
-    //going to the wrong next value
+    if ( nextObjectInLine.next === undefined ) {
+      console.log('Add functions can be used to add items to the end of this list.');
+    }
+    nextObjectInLine = nextObjectInLine.next;
     objectToAppend.next = newToInsert;
+    countLength++;
   }
 
   function _promptGet () {
