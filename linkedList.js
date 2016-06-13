@@ -55,8 +55,6 @@ function linkedListGenerator(){
     console.log( 'Added: ' + valueToBeAdded);
   }
 
-// add an if to check if null, make i break for (like i < 2 so i would = 10 at null)
-
   function _getByValue (value) {
     var valueEntered = value;
     if ( value === "" ) {
@@ -104,7 +102,7 @@ function linkedListGenerator(){
       console.log( valueEntered + ' not found' );
     }
   }
-//if next = null need to ignore next
+
   function _insert (value, number) {
     var valueEntered = prompt ( 'Enter the value you would like save' );
     var valueToAppend = prompt ( 'Enter the value you would like to find and append' );
@@ -114,9 +112,6 @@ function linkedListGenerator(){
       value: valueEntered,
       next: nextObjectInLine
     };
-    if ( nextObjectInLine.next === undefined ) {
-      console.log('Add functions can be used to add items to the end of this list.');
-    }
     nextObjectInLine = nextObjectInLine.next;
     objectToAppend.next = newToInsert;
     countLength++;
