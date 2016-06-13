@@ -5,7 +5,7 @@
  */
 
 //var node = {};
-var makeDynamic = 4;
+var makeDynamic = 5;
 var node = {
   value: 'donkey',
   next: {
@@ -46,6 +46,7 @@ var tail = node.next.next.next;
   }
 
   function _add(value) {
+    var valueToBeAdded =  _promptGet ();
     if ( head === null && tail === null ) {
       node = {
         value: value,
@@ -55,7 +56,6 @@ var tail = node.next.next.next;
       head = node.value;
     }
     if ( node.tail !== null ) {
-      var valueToBeAdded = prompt ('What would you like to add?');
       addTracking.next = {
         value: valueToBeAdded,
         next: null
@@ -68,9 +68,10 @@ var tail = node.next.next.next;
 // add an if to check if null, make i break for (like i < 2 so i would = 10 at null)
 
   function _getByValue (value) {
+    var valueEntered =  _promptGet ();
     var nodeNextTracker = node;
     for ( var i = 1; i < makeDynamic; i++ ){
-      if ( nodeNextTracker.value !== value ) {
+      if ( nodeNextTracker.value !== valueEntered ) {
         nodeNextTracker = nodeNextTracker.next;
       } else {
         console.log ( 'it is ' + nodeNextTracker.value + ' which is item ' + i + ' in the list ');
@@ -88,8 +89,8 @@ var tail = node.next.next.next;
   }
 
   function _promptGet () {
-    var valueToBeFound = prompt ('what is your get value');
-    _getByValue(valueToBeFound);
+    var valueToBeFound = prompt ('what is your value or hop count?');
+    return valueToBeFound;
   }
 
   return {
